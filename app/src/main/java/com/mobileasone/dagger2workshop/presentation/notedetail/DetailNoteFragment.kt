@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.mobileasone.dagger2workshop.R
-import com.mobileasone.dagger2workshop.data.local.NotesLocalMemoryRepository
-import com.mobileasone.dagger2workshop.data.network.NotesServiceApiImpl
-import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
+import com.mobileasone.dagger2workshop.di.PresenterFactory
 import com.mobileasone.dagger2workshop.util.ImageViewWithImagePath
 import kotlinx.android.synthetic.main.fragment_note_detail.note_detail_description
 import kotlinx.android.synthetic.main.fragment_note_detail.note_detail_image
@@ -37,7 +35,7 @@ class DetailNoteFragment : Fragment(),
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter = DetailNoteFragmentPresenterImpl.getInstance(instantiateNotesRepository())
+        presenter = PresenterFactory.createDetailNotePresenter()
     }
 
     override fun onCreateView(
@@ -111,9 +109,5 @@ class DetailNoteFragment : Fragment(),
         detailTitle?.text = ""
         detailDescription?.text = getString(R.string.no_data)
     }
-
-    private fun instantiateNotesRepository(): NotesRepository = NotesLocalMemoryRepository.getInstance(instantiateNotesNetworkRepository())
-
-    private fun instantiateNotesNetworkRepository() = NotesServiceApiImpl.getInstance()
 
 }
