@@ -13,10 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mobileasone.dagger2workshop.R
-import com.mobileasone.dagger2workshop.data.local.NotesLocalMemoryRepository
-import com.mobileasone.dagger2workshop.data.network.NotesServiceApiImpl
+import com.mobileasone.dagger2workshop.di.PresenterFactory
 import com.mobileasone.dagger2workshop.domain.Note
-import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import kotlinx.android.synthetic.main.activity_note_list.fab_add_notes
 import kotlinx.android.synthetic.main.fragment_notes.notes_list
 import kotlinx.android.synthetic.main.fragment_notes.refresh_layout
@@ -53,7 +51,7 @@ class NoteListFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        presenter = NoteListFragmentPresenterImpl.getInstance(instantiateNotesRepository())
+        presenter = PresenterFactory.createNoteListPresenter()
         presenter.attachView(this)
     }
 
@@ -135,10 +133,6 @@ class NoteListFragment : Fragment(),
                 ContextCompat.getColor(activity, R.color.colorPrimaryDark))
         swipeRefreshLayout.setOnRefreshListener { presenter.loadNotes(true) }
     }
-
-    private fun instantiateNotesRepository(): NotesRepository = NotesLocalMemoryRepository.getInstance(instantiateNotesNetworkRepository())
-
-    private fun instantiateNotesNetworkRepository() = NotesServiceApiImpl.getInstance()
 
     interface Callback {
 

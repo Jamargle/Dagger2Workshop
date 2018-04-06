@@ -9,7 +9,7 @@ import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
  * Concrete implementation to load notes from the local data source.
  */
 class NotesLocalMemoryRepository
-private constructor(private val notesServiceApi: NotesServiceApi) : NotesRepository {
+constructor(private val notesServiceApi: NotesServiceApi) : NotesRepository {
 
     companion object {
         /**
@@ -18,16 +18,6 @@ private constructor(private val notesServiceApi: NotesServiceApi) : NotesReposit
          */
         @VisibleForTesting
         var cachedNotes: List<Note> = emptyList()
-
-        private var INSTANCE: NotesLocalMemoryRepository? = null
-
-        fun getInstance(notesServiceApi: NotesServiceApi): NotesRepository {
-            if (INSTANCE == null) {
-                INSTANCE = NotesLocalMemoryRepository(notesServiceApi)
-            }
-            return INSTANCE as NotesRepository
-        }
-
     }
 
     override fun getNotes(callback: NotesRepository.LoadNotesCallback) {

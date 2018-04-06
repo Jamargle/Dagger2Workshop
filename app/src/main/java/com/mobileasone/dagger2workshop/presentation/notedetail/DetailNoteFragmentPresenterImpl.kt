@@ -5,22 +5,8 @@ import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import java.lang.ref.WeakReference
 
-
 class DetailNoteFragmentPresenterImpl
 @VisibleForTesting constructor(private val notesRepository: NotesRepository) : DetailNoteFragmentPresenter {
-
-    companion object {
-
-        private var INSTANCE: DetailNoteFragmentPresenter? = null
-
-        fun getInstance(notesRepository: NotesRepository): DetailNoteFragmentPresenter {
-            if (INSTANCE == null) {
-                INSTANCE = DetailNoteFragmentPresenterImpl(notesRepository)
-            }
-            return INSTANCE as DetailNoteFragmentPresenter
-        }
-
-    }
 
     private var viewReference: WeakReference<DetailNoteFragmentPresenter.View>? = null
 

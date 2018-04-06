@@ -51,7 +51,7 @@ class NotesLocalMemoryRepositoryTest {
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        notesRepository = NotesLocalMemoryRepository.getInstance(notesServiceApi)
+        notesRepository = NotesLocalMemoryRepository(notesServiceApi)
     }
 
     @After
@@ -98,7 +98,6 @@ class NotesLocalMemoryRepositoryTest {
         val noteDescription = "Some Note Description"
         val newNote = Note(noteTitle, noteDescription)
         val noteCaptor = argumentCaptor<Note>()
-        notesServiceApi.saveNote(newNote)
 
         // When
         notesRepository.saveNote(newNote)

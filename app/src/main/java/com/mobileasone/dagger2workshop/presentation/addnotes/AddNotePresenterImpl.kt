@@ -8,23 +8,11 @@ import com.mobileasone.dagger2workshop.util.ImageFile
 import com.mobileasone.dagger2workshop.util.ImageFileImpl
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class AddNotePresenterImpl
-private constructor(private val notesRepository: NotesRepository) : AddNotePresenter {
-
-    companion object {
-
-        private var INSTANCE: AddNotePresenter? = null
-
-        fun getInstance(notesRepository: NotesRepository): AddNotePresenter {
-            if (INSTANCE == null) {
-                INSTANCE = AddNotePresenterImpl(notesRepository)
-            }
-            return INSTANCE as AddNotePresenter
-        }
-
-    }
+constructor(private val notesRepository: NotesRepository) : AddNotePresenter {
 
     private var viewReference: WeakReference<AddNotePresenter.View>? = null
     @VisibleForTesting lateinit var imageFile: ImageFile

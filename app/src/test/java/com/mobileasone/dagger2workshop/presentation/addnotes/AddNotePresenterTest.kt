@@ -4,7 +4,6 @@ import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import com.mobileasone.dagger2workshop.util.ImageFile
 import com.nhaarman.mockito_kotlin.argumentCaptor
-import com.nhaarman.mockito_kotlin.eq
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Ignore
@@ -33,7 +32,7 @@ class AddNotePresenterTest {
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        presenter = AddNotePresenterImpl.getInstance(notesRepository)
+        presenter = AddNotePresenterImpl(notesRepository)
         presenter.attachView(view)
     }
 
@@ -95,7 +94,6 @@ class AddNotePresenterTest {
         val title = "some title"
         val description = "some description"
         val path = "some path"
-        notesRepository.saveNote(eq(Note(title, description, path)))
 
         // When
         presenter.saveNote(title, description, path)
