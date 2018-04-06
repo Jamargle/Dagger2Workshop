@@ -44,7 +44,7 @@ private constructor() : NotesServiceApi {
     }
 
     override fun saveNote(note: Note) {
-        NOTES_SERVICE_DATA.put(note.getId(), note)
+        NOTES_SERVICE_DATA[note.getId()] = note
     }
 
 }
