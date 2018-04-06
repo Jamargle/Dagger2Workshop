@@ -1,12 +1,13 @@
 package com.mobileasone.dagger2workshop.presentation.notedetail
 
+import android.support.annotation.VisibleForTesting
 import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import java.lang.ref.WeakReference
 
 
 class DetailNoteFragmentPresenterImpl
-private constructor(private val notesRepository: NotesRepository) : DetailNoteFragmentPresenter {
+@VisibleForTesting constructor(private val notesRepository: NotesRepository) : DetailNoteFragmentPresenter {
 
     companion object {
 
