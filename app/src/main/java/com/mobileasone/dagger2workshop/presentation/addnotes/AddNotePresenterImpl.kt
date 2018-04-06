@@ -1,5 +1,6 @@
 package com.mobileasone.dagger2workshop.presentation.addnotes
 
+import android.support.annotation.VisibleForTesting
 import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import com.mobileasone.dagger2workshop.util.GeneralConstants
@@ -26,7 +27,7 @@ private constructor(private val notesRepository: NotesRepository) : AddNotePrese
     }
 
     private var viewReference: WeakReference<AddNotePresenter.View>? = null
-    private lateinit var imageFile: ImageFile
+    @VisibleForTesting lateinit var imageFile: ImageFile
 
     override fun attachView(view: AddNotePresenter.View) {
         this.viewReference = WeakReference(view)

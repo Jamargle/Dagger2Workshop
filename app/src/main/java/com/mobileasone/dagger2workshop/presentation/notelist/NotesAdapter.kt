@@ -14,21 +14,21 @@ class NotesAdapter(
         RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
-            parent: ViewGroup?,
+            parent: ViewGroup,
             viewType: Int): NotesAdapter.ViewHolder {
 
-        return ViewHolder(LayoutInflater.from(parent?.context)
+        return ViewHolder(LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_note, parent, false))
     }
 
     override fun getItemCount() = noteList.count()
 
     override fun onBindViewHolder(
-            holder: NotesAdapter.ViewHolder?,
+            holder: ViewHolder,
             position: Int) {
 
         val note = noteList[position]
-        holder?.title?.text = note.title
+        holder.title?.text = note.title
         holder?.description?.text = note.description
         holder?.itemView?.setOnClickListener({
             listener.onNoteClicked(note)
