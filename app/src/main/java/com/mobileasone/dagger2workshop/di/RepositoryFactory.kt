@@ -5,7 +5,11 @@ import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 
 object RepositoryFactory {
 
-    fun createNotesRepository(): NotesRepository = NotesLocalMemoryRepository.getInstance(instantiateNetworkApi())
+    private val notesLocalMemoryRepositoryInstance: NotesRepository by lazy { initNotesRepository() }
+
+    fun createNotesRepository(): NotesRepository = notesLocalMemoryRepositoryInstance
+
+    private fun initNotesRepository(): NotesRepository = NotesLocalMemoryRepository(instantiateNetworkApi())
 
     private fun instantiateNetworkApi() = NetworkApiFactory.createNetworkApi()
 

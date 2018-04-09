@@ -5,8 +5,10 @@ import com.mobileasone.dagger2workshop.data.network.NotesServiceApiImpl
 
 object NetworkApiFactory {
 
-    fun createNetworkApi(): NotesServiceApi {
-        return NotesServiceApiImpl.getInstance()
-    }
+    private val notesServiceApiInstance: NotesServiceApi by lazy { initNotesServiceApi() }
+
+    fun createNetworkApi(): NotesServiceApi = notesServiceApiInstance
+
+    private fun initNotesServiceApi(): NotesServiceApi = NotesServiceApiImpl()
 
 }

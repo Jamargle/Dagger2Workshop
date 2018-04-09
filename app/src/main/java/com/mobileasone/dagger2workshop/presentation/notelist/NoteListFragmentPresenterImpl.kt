@@ -1,25 +1,11 @@
 package com.mobileasone.dagger2workshop.presentation.notelist
 
-import android.support.annotation.VisibleForTesting
 import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import java.lang.ref.WeakReference
 
 class NoteListFragmentPresenterImpl
-@VisibleForTesting constructor(private val notesRepository: NotesRepository) : NoteListFragmentPresenter {
-
-    companion object {
-
-        private var INSTANCE: NoteListFragmentPresenter? = null
-
-        fun getInstance(notesRepository: NotesRepository): NoteListFragmentPresenter {
-            if (INSTANCE == null) {
-                INSTANCE = NoteListFragmentPresenterImpl(notesRepository)
-            }
-            return INSTANCE as NoteListFragmentPresenter
-        }
-
-    }
+constructor(private val notesRepository: NotesRepository) : NoteListFragmentPresenter {
 
     private var viewReference: WeakReference<NoteListFragmentPresenter.View>? = null
 

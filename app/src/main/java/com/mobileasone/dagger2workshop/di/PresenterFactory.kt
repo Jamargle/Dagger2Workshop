@@ -9,11 +9,21 @@ import com.mobileasone.dagger2workshop.presentation.notelist.NoteListFragmentPre
 
 object PresenterFactory {
 
-    fun createNoteListPresenter(): NoteListFragmentPresenter = NoteListFragmentPresenterImpl.getInstance(instantiateNotesRepository())
+    private val noteListFragmentPresenterInstance: NoteListFragmentPresenter by lazy { initNoteListFragmentPresenter() }
+    private val addNoteFragmentPresenterInstance: AddNotePresenter by lazy { initAddNoteFragmentPresenter() }
+    private val detailNoteFragmentPresenterInstance: DetailNoteFragmentPresenter by lazy { initDetailNoteFragmentPresenter() }
 
-    fun createAddNotePresenter(): AddNotePresenter = AddNotePresenterImpl.getInstance(instantiateNotesRepository())
+    fun createNoteListPresenter(): NoteListFragmentPresenter = noteListFragmentPresenterInstance
 
-    fun createDetailNotePresenter(): DetailNoteFragmentPresenter = DetailNoteFragmentPresenterImpl.getInstance(instantiateNotesRepository())
+    fun createAddNotePresenter(): AddNotePresenter = addNoteFragmentPresenterInstance
+
+    fun createDetailNotePresenter(): DetailNoteFragmentPresenter = detailNoteFragmentPresenterInstance
+
+    private fun initNoteListFragmentPresenter(): NoteListFragmentPresenter = NoteListFragmentPresenterImpl(instantiateNotesRepository())
+
+    private fun initAddNoteFragmentPresenter(): AddNotePresenter = AddNotePresenterImpl(instantiateNotesRepository())
+
+    private fun initDetailNoteFragmentPresenter(): DetailNoteFragmentPresenter = DetailNoteFragmentPresenterImpl(instantiateNotesRepository())
 
     private fun instantiateNotesRepository() = RepositoryFactory.createNotesRepository()
 
