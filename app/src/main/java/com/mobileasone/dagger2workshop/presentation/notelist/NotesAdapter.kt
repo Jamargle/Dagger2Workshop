@@ -28,9 +28,9 @@ class NotesAdapter(
             position: Int) {
 
         val note = noteList[position]
-        holder.title?.text = note.title
-        holder?.description?.text = note.description
-        holder?.itemView?.setOnClickListener({
+        holder.title.text = note.title
+        holder.description.text = note.description
+        holder.itemView?.setOnClickListener({
             listener.onNoteClicked(note)
         })
     }
