@@ -11,11 +11,16 @@ import com.mobileasone.dagger2workshop.presentation.addnotes.AddNoteActivity
 import com.mobileasone.dagger2workshop.presentation.notedetail.DetailNoteActivity
 import com.mobileasone.dagger2workshop.presentation.otherb.OtherFragmentB
 import com.mobileasone.dagger2workshop.presentation.otherc.OtherFragmentC
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasFragmentInjector
 import kotlinx.android.synthetic.main.activity_note_list.bottom_navigation
 import kotlinx.android.synthetic.main.activity_note_list.content_frame
 import kotlinx.android.synthetic.main.activity_note_list.toolbar
+import javax.inject.Inject
 
-class NoteListActivity : AppCompatActivity(),
+class NoteListActivity : AppCompatActivity(), HasFragmentInjector,
         NoteListFragment.Callback,
         OtherFragmentB.Callback,
         OtherFragmentC.Callback {
@@ -24,9 +29,14 @@ class NoteListActivity : AppCompatActivity(),
         private const val SELECTED_ITEM = "key:selected_item"
     }
 
+    @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun fragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+
     private var selectedItem = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_list)
         initToolbar()
