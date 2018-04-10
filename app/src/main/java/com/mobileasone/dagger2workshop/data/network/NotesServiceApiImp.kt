@@ -2,8 +2,10 @@ package com.mobileasone.dagger2workshop.data.network
 
 import android.os.Handler
 import com.mobileasone.dagger2workshop.domain.Note
+import javax.inject.Inject
 
-class NotesServiceApiImpl : NotesServiceApi {
+class NotesServiceApiImpl
+@Inject constructor() : NotesServiceApi {
 
     companion object {
         private const val SERVICE_LATENCY_IN_MILLIS = 1500L
