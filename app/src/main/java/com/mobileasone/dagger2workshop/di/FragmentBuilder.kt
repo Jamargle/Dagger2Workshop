@@ -1,8 +1,10 @@
 package com.mobileasone.dagger2workshop.di
 
-import com.example.mbasone.daggerworkshop.di.DetailNoteFragmentModule
+import com.mobileasone.dagger2workshop.presentation.addnotes.AddNoteFragment
 import com.mobileasone.dagger2workshop.presentation.notedetail.DetailNoteFragment
 import com.mobileasone.dagger2workshop.presentation.notelist.NoteListFragment
+import com.mobileasone.dagger2workshop.presentation.otherb.OtherFragmentB
+import com.mobileasone.dagger2workshop.presentation.otherc.OtherFragmentC
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -15,5 +17,14 @@ abstract class FragmentBuilder {
 
     @ContributesAndroidInjector(modules = [DetailNoteFragmentModule::class])
     abstract fun bindDetailNoteFragment(): DetailNoteFragment
+
+    @ContributesAndroidInjector(modules = [AddNoteFragmentModule::class])
+    abstract fun bindAddNoteFragmentFragment(): AddNoteFragment
+
+    @ContributesAndroidInjector(modules = [OtherFragmentBModule::class])
+    abstract fun bindOtherFragmentB(): OtherFragmentB
+
+    @ContributesAndroidInjector(modules = [OtherFragmentCModule::class])
+    abstract fun bindOtherFragmentC(): OtherFragmentC
 
 }

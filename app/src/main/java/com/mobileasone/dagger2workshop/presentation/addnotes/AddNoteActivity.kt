@@ -1,6 +1,7 @@
 package com.mobileasone.dagger2workshop.presentation.addnotes
 
 import android.Manifest
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +9,19 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.mobileasone.dagger2workshop.R
+import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasFragmentInjector
 import kotlinx.android.synthetic.main.activity_add_note.toolbar
+import javax.inject.Inject
 
-class AddNoteActivity : AppCompatActivity(),
+class AddNoteActivity : AppCompatActivity(), HasFragmentInjector,
         AddNoteFragment.Callback {
+
+    @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun fragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 
     companion object {
         private const val ADD_NOTE_FRAGMENT_TAG = "add_note_fragment_tag"
@@ -20,6 +30,7 @@ class AddNoteActivity : AppCompatActivity(),
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
         initToolbar()

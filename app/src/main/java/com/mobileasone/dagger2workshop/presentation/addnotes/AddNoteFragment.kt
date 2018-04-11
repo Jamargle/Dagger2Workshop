@@ -20,13 +20,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.mobileasone.dagger2workshop.R
-import com.mobileasone.dagger2workshop.di.PresenterFactory
 import com.mobileasone.dagger2workshop.util.GeneralConstants
 import com.mobileasone.dagger2workshop.util.ImageViewWithImagePath
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.fragment_add_note.add_note_description
 import kotlinx.android.synthetic.main.fragment_add_note.add_note_image_thumbnail
 import kotlinx.android.synthetic.main.fragment_add_note.add_note_title
 import java.io.File
+import javax.inject.Inject
 
 class AddNoteFragment : Fragment(),
         AddNotePresenter.View {
@@ -40,12 +41,18 @@ class AddNoteFragment : Fragment(),
         }
     }
 
-    private lateinit var presenter: AddNotePresenter
+    @Inject lateinit var presenter: AddNotePresenter
+
     private lateinit var callback: Callback
 
     private lateinit var title: TextView
     private lateinit var description: TextView
     private lateinit var imageThumbnail: ImageView
+
+    override fun onAttach(activity: Activity?) {
+        AndroidInjection.inject(this)
+        super.onAttach(activity)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -60,7 +67,6 @@ class AddNoteFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        presenter = PresenterFactory.createAddNotePresenter()
         presenter.attachView(this)
     }
 
