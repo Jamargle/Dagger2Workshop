@@ -1,12 +1,12 @@
 package com.mobileasone.dagger2workshop.presentation.notedetail
 
-import android.support.annotation.VisibleForTesting
 import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import java.lang.ref.WeakReference
+import javax.inject.Inject
 
 class DetailNoteFragmentPresenterImpl
-@VisibleForTesting constructor(private val notesRepository: NotesRepository) : DetailNoteFragmentPresenter {
+@Inject constructor(private val notesRepository: NotesRepository) : DetailNoteFragmentPresenter {
 
     private var viewReference: WeakReference<DetailNoteFragmentPresenter.View>? = null
 

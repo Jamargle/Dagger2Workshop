@@ -2,21 +2,7 @@ package com.mobileasone.dagger2workshop.presentation.otherb
 
 import java.lang.ref.WeakReference
 
-class OtherFragmentBPresenterImpl
-private constructor() : OtherFragmentBPresenter {
-
-    companion object {
-
-        private var INSTANCE: OtherFragmentBPresenter? = null
-
-        fun getInstance(): OtherFragmentBPresenter {
-            if (INSTANCE == null) {
-                INSTANCE = OtherFragmentBPresenterImpl()
-            }
-            return INSTANCE as OtherFragmentBPresenter
-        }
-
-    }
+class OtherFragmentBPresenterImpl : OtherFragmentBPresenter {
 
     private var viewReference: WeakReference<OtherFragmentBPresenter.View>? = null
 

@@ -13,11 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mobileasone.dagger2workshop.R
-import com.mobileasone.dagger2workshop.di.PresenterFactory
 import com.mobileasone.dagger2workshop.domain.Note
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_note_list.fab_add_notes
 import kotlinx.android.synthetic.main.fragment_notes.notes_list
 import kotlinx.android.synthetic.main.fragment_notes.refresh_layout
+import javax.inject.Inject
 
 class NoteListFragment : Fragment(),
         NoteListFragmentPresenter.View,
@@ -29,9 +30,15 @@ class NoteListFragment : Fragment(),
         fun newInstance() = NoteListFragment()
     }
 
+    @Inject lateinit var presenter: NoteListFragmentPresenter
+
     private lateinit var callback: Callback
-    private lateinit var presenter: NoteListFragmentPresenter
     private lateinit var adapter: NotesAdapter
+
+    override fun onAttach(activity: Activity?) {
+        AndroidInjection.inject(this)
+        super.onAttach(activity)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater?,
@@ -51,7 +58,6 @@ class NoteListFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        presenter = PresenterFactory.createNoteListPresenter()
         presenter.attachView(this)
     }
 

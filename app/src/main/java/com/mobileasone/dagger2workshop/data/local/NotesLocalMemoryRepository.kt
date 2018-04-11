@@ -4,12 +4,13 @@ import android.support.annotation.VisibleForTesting
 import com.mobileasone.dagger2workshop.data.network.NotesServiceApi
 import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
+import javax.inject.Inject
 
 /**
  * Concrete implementation to load notes from the local data source.
  */
 class NotesLocalMemoryRepository
-constructor(private val notesServiceApi: NotesServiceApi) : NotesRepository {
+@Inject constructor(private val notesServiceApi: NotesServiceApi) : NotesRepository {
 
     companion object {
         /**

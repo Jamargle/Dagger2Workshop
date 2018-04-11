@@ -1,11 +1,14 @@
 package com.mobileasone.dagger2workshop.presentation.otherc
 
+import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mobileasone.dagger2workshop.R
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class OtherFragmentC : Fragment(),
         OtherFragmentCPresenter.View {
@@ -14,8 +17,13 @@ class OtherFragmentC : Fragment(),
         fun newInstance() = OtherFragmentC()
     }
 
-    private lateinit var presenter: OtherFragmentCPresenter
+    @Inject lateinit var presenter: OtherFragmentCPresenter
     private lateinit var callback: Callback
+
+    override fun onAttach(activity: Activity?) {
+        AndroidInjection.inject(this)
+        super.onAttach(activity)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater?,
@@ -28,7 +36,6 @@ class OtherFragmentC : Fragment(),
             savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        presenter = OtherFragmentCPresenterImpl.getInstance()
         callback = activity as Callback
         callback.updateTitleForFragmentC()
     }
