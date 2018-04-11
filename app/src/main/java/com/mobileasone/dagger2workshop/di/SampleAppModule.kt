@@ -13,7 +13,8 @@ import javax.inject.Singleton
  * scope.
  */
 @Module(subcomponents = [
-    NoteListFragmentComponent::class
+    NoteListFragmentComponent::class,
+    DetailNoteFragmentComponent::class
 ])
 abstract class SampleAppModule {
 

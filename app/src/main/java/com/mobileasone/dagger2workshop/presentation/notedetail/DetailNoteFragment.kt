@@ -1,5 +1,6 @@
 package com.mobileasone.dagger2workshop.presentation.notedetail
 
+import android.app.Activity
 import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +9,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.mobileasone.dagger2workshop.R
-import com.mobileasone.dagger2workshop.di.PresenterFactory
 import com.mobileasone.dagger2workshop.util.ImageViewWithImagePath
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.fragment_note_detail.note_detail_description
 import kotlinx.android.synthetic.main.fragment_note_detail.note_detail_image
 import kotlinx.android.synthetic.main.fragment_note_detail.note_detail_title
+import javax.inject.Inject
 
 class DetailNoteFragment : Fragment(),
         DetailNoteFragmentPresenter.View {
@@ -27,15 +29,15 @@ class DetailNoteFragment : Fragment(),
         }
     }
 
+    @Inject lateinit var presenter: DetailNoteFragmentPresenter
+
     private var detailImage: ImageView? = null
     private var detailTitle: TextView? = null
     private var detailDescription: TextView? = null
 
-    private lateinit var presenter: DetailNoteFragmentPresenter
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        presenter = PresenterFactory.createDetailNotePresenter()
+    override fun onAttach(activity: Activity?) {
+        AndroidInjection.inject(this)
+        super.onAttach(activity)
     }
 
     override fun onCreateView(
