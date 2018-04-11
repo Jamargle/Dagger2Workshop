@@ -4,6 +4,8 @@ import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import com.mobileasone.dagger2workshop.util.ImageFile
 import com.nhaarman.mockito_kotlin.argumentCaptor
+import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Ignore
@@ -34,6 +36,11 @@ class AddNotePresenterTest {
         // Get a reference to the class under test
         presenter = AddNotePresenterImpl(notesRepository)
         presenter.attachView(view)
+    }
+
+    @After
+    fun cleanUp() {
+        verifyNoMoreInteractions(view, notesRepository, imageFile)
     }
 
     @Test
@@ -133,14 +140,17 @@ class AddNotePresenterTest {
         // Given
         val imageUrl = "path/to/file"
         imageFile.create(imageUrl, ".png")
+        (presenter as AddNotePresenterImpl).imageFile = imageFile
         `when`(imageFile.exists()).thenReturn(true)
         `when`(imageFile.getPath()).thenReturn(imageUrl)
-        (presenter as AddNotePresenterImpl).imageFile = imageFile
 
         // When
         presenter.imageAvailable()
 
         // Then
+        verify(imageFile).create(imageUrl, ".png") // Initialization above
+        verify(imageFile).exists()
+        verify(imageFile).getPath()
         verify(view).showImagePreview(ArgumentMatchers.contains(imageUrl))
     }
 
@@ -154,6 +164,7 @@ class AddNotePresenterTest {
         presenter.imageAvailable()
 
         // Then
+        verify(imageFile).exists()
         verify(view).showImageError()
         verify(imageFile).delete()
     }
@@ -161,8 +172,6 @@ class AddNotePresenterTest {
     @Test
     fun noImageAvailable_ShowsErrorUi() {
         // Given
-        val imageUrl = "path/to/file"
-        imageFile.create(imageUrl, ".png")
         (presenter as AddNotePresenterImpl).imageFile = imageFile
 
         // When
