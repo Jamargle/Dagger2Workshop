@@ -34,7 +34,7 @@ class AddNotePresenterTest {
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        presenter = AddNotePresenterImpl.getInstance(notesRepository)
+        presenter = AddNotePresenterImpl(notesRepository)
         presenter.attachView(view)
     }
 

@@ -4,20 +4,11 @@ import android.os.Handler
 import com.mobileasone.dagger2workshop.domain.Note
 
 class NotesServiceApiImpl
-private constructor() : NotesServiceApi {
+constructor() : NotesServiceApi {
 
     companion object {
         private const val SERVICE_LATENCY_IN_MILLIS = 1500L
         private val NOTES_SERVICE_DATA: MutableMap<String, Note> = FakeNotesServiceApiEndpoint.loadPersistedNotes()
-
-        private var INSTANCE: NotesServiceApiImpl? = null
-
-        fun getInstance(): NotesServiceApi {
-            if (INSTANCE == null) {
-                INSTANCE = NotesServiceApiImpl()
-            }
-            return INSTANCE as NotesServiceApi
-        }
     }
 
     override fun getAllNotes(callback: NotesServiceApi.NotesServiceCallback<List<Note>>) {
