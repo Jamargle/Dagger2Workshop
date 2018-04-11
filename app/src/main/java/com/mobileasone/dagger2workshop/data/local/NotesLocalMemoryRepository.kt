@@ -4,12 +4,13 @@ import android.support.annotation.VisibleForTesting
 import com.mobileasone.dagger2workshop.data.network.NotesServiceApi
 import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
+import javax.inject.Inject
 
 /**
  * Concrete implementation to load notes from the local data source.
  */
 class NotesLocalMemoryRepository
-private constructor(private val notesServiceApi: NotesServiceApi) : NotesRepository {
+@Inject constructor(private val notesServiceApi: NotesServiceApi) : NotesRepository {
 
     companion object {
         /**
@@ -18,16 +19,6 @@ private constructor(private val notesServiceApi: NotesServiceApi) : NotesReposit
          */
         @VisibleForTesting
         var cachedNotes: List<Note> = emptyList()
-
-        private var INSTANCE: NotesLocalMemoryRepository? = null
-
-        fun getInstance(notesServiceApi: NotesServiceApi): NotesRepository {
-            if (INSTANCE == null) {
-                INSTANCE = NotesLocalMemoryRepository(notesServiceApi)
-            }
-            return INSTANCE as NotesRepository
-        }
-
     }
 
     override fun getNotes(callback: NotesRepository.LoadNotesCallback) {

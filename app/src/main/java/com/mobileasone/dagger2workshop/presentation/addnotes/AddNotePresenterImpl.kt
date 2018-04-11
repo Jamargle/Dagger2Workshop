@@ -5,30 +5,17 @@ import com.mobileasone.dagger2workshop.domain.Note
 import com.mobileasone.dagger2workshop.domain.repositories.NotesRepository
 import com.mobileasone.dagger2workshop.util.GeneralConstants
 import com.mobileasone.dagger2workshop.util.ImageFile
-import com.mobileasone.dagger2workshop.util.ImageFileImpl
 import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class AddNotePresenterImpl
-private constructor(private val notesRepository: NotesRepository) : AddNotePresenter {
-
-    companion object {
-
-        private var INSTANCE: AddNotePresenter? = null
-
-        fun getInstance(notesRepository: NotesRepository): AddNotePresenter {
-            if (INSTANCE == null) {
-                INSTANCE = AddNotePresenterImpl(notesRepository)
-            }
-            return INSTANCE as AddNotePresenter
-        }
-
-    }
+constructor(
+        private val notesRepository: NotesRepository,
+        @VisibleForTesting val imageFile: ImageFile) : AddNotePresenter {
 
     private var viewReference: WeakReference<AddNotePresenter.View>? = null
-    @VisibleForTesting lateinit var imageFile: ImageFile
 
     override fun attachView(view: AddNotePresenter.View) {
         this.viewReference = WeakReference(view)
@@ -63,7 +50,7 @@ private constructor(private val notesRepository: NotesRepository) : AddNotePrese
     override fun takePicture() {
         val timeStamp = SimpleDateFormat(GeneralConstants.DATE_FORMAT, Locale.getDefault()).format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
-        instantiateImageFile(imageFileName)
+        imageFile.create(imageFileName, ".jpg")
         imageFile.getPath()?.let { getView()?.openCamera(it) }
     }
 
@@ -78,11 +65,6 @@ private constructor(private val notesRepository: NotesRepository) : AddNotePrese
     override fun imageCaptureFailed() {
         imageFile.delete()
         getView()?.showImageError()
-    }
-
-    private fun instantiateImageFile(fileName: String) {
-        imageFile = ImageFileImpl()
-        imageFile.create(fileName, ".jpg")
     }
 
 }

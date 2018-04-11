@@ -34,7 +34,7 @@ class AddNotePresenterTest {
         MockitoAnnotations.initMocks(this)
 
         // Get a reference to the class under test
-        presenter = AddNotePresenterImpl.getInstance(notesRepository)
+        presenter = AddNotePresenterImpl(notesRepository, imageFile)
         presenter.attachView(view)
     }
 
@@ -139,8 +139,7 @@ class AddNotePresenterTest {
     fun imageAvailable_SavesImageAndUpdatesUiWithThumbnail() {
         // Given
         val imageUrl = "path/to/file"
-        imageFile.create(imageUrl, ".png")
-        (presenter as AddNotePresenterImpl).imageFile = imageFile
+        (presenter as AddNotePresenterImpl).imageFile.create(imageUrl, ".png")
         `when`(imageFile.exists()).thenReturn(true)
         `when`(imageFile.getPath()).thenReturn(imageUrl)
 
@@ -158,7 +157,6 @@ class AddNotePresenterTest {
     fun imageAvailable_FileDoesNotExistShowsErrorUi() {
         // Given
         `when`(imageFile.exists()).thenReturn(false)
-        (presenter as AddNotePresenterImpl).imageFile = imageFile
 
         // When
         presenter.imageAvailable()
@@ -171,9 +169,6 @@ class AddNotePresenterTest {
 
     @Test
     fun noImageAvailable_ShowsErrorUi() {
-        // Given
-        (presenter as AddNotePresenterImpl).imageFile = imageFile
-
         // When
         presenter.imageCaptureFailed()
 
